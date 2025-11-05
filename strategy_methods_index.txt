@@ -1,0 +1,120 @@
+71:  def version(self) -> str:
+820:  def __init__(self, config: dict) -> None:
+940:  def plot_config(self):
+959:  def get_ticker_indicator(self):
+964:  def mark_profit_target(
+984:  def exit_profit_target(
+1646:  def calc_total_profit(
+1700:  def custom_exit(
+2257:  def custom_stake_amount(
+2390:  def order_filled(self, pair: str, trade: Trade, order: Order, current_time: datetime, **kwargs) -> None:
+2401:  def adjust_trade_position(
+2700:  def notification_msg(
+2833:  def informative_pairs(self):
+2870:  def informative_1d_indicators(self, metadata: dict, info_timeframe) -> DataFrame:
+2998:  def informative_4h_indicators(self, metadata: dict, info_timeframe) -> DataFrame:
+3169:  def informative_1h_indicators(self, metadata: dict, info_timeframe) -> DataFrame:
+3337:  def informative_15m_indicators(self, metadata: dict, info_timeframe) -> DataFrame:
+3459:  def base_tf_5m_indicators(self, metadata: dict, df: DataFrame) -> DataFrame:
+3623:  def info_switcher(self, metadata: dict, info_timeframe) -> DataFrame:
+3637:  def btc_info_1d_indicators(self, btc_info_pair, btc_info_timeframe, metadata: dict) -> DataFrame:
+3675:  def btc_info_4h_indicators(self, btc_info_pair, btc_info_timeframe, metadata: dict) -> DataFrame:
+3693:  def btc_info_1h_indicators(self, btc_info_pair, btc_info_timeframe, metadata: dict) -> DataFrame:
+3711:  def btc_info_15m_indicators(self, btc_info_pair, btc_info_timeframe, metadata: dict) -> DataFrame:
+3729:  def btc_info_5m_indicators(self, btc_info_pair, btc_info_timeframe, metadata: dict) -> DataFrame:
+3747:  def btc_info_switcher(self, btc_info_pair, btc_info_timeframe, metadata: dict) -> DataFrame:
+3763:  def populate_indicators(self, df: DataFrame, metadata: dict) -> DataFrame:
+11385:  def confirm_trade_entry(
+11471:  def _handle_grind_mode(self, pair: str, config: dict, current_time: datetime) -> bool:
+11485:  def _handle_top_coins_mode(self, pair: str, config: dict, current_time: datetime) -> bool:
+11492:  def _handle_scalp_mode(self, pair: str, config: dict, current_time: datetime) -> bool:
+11501:  def confirm_trade_exit(
+11536:  def bot_loop_start(self, current_time: datetime, **kwargs) -> None:
+11547:  def leverage(
+11567:  def correct_min_stake(self, min_stake: float) -> float:
+11574:  def is_backtest_mode(self) -> bool:
+11578:  def is_system_v3(self, trade: Trade) -> bool:
+11582:  def is_system_v3_1(self, trade: Trade) -> bool:
+11586:  def has_valid_entry_conditions(self, trade: Trade, exit_rate: float, last_candle, previous_candle) -> bool:
+11600:  def update_signals_from_config(self, config):
+11615:  def _set_profit_target(
+11628:  def _remove_profit_target(self, pair: str):
+11635:  def get_hold_trades_config_file(self):
+11662:  def load_hold_trades_config(self):
+11674:  def _should_hold_trade(self, trade: "Trade", rate: float, sell_reason: str) -> bool:
+11767:  def populate_exit_trend(self, df: DataFrame, metadata: dict) -> DataFrame:
+11797:  def populate_entry_trend(self, df: DataFrame, metadata: dict) -> DataFrame:
+19290:  def long_exit_normal(
+19549:  def long_exit_pump(
+19800:  def long_exit_quick(
+20090:  def long_exit_rebuy(
+20334:  def long_exit_high_profit(
+20564:  def long_exit_rapid(
+20863:  def long_exit_grind(
+20894:  def long_exit_top_coins(
+21151:  def long_exit_scalp(
+21400:  def long_exit_signals(
+21497:  def long_exit_main(
+21600:  def long_exit_williams_r(
+23287:  def long_exit_dec(
+37012:  def long_exit_stoploss(
+37134:  def long_grind_adjust_trade_position_v2(
+39172:  def long_buyback_entry_v2(
+39263:  def long_grind_entry_v2(
+39512:  def long_buyback_exit_v2(
+39527:  def long_grind_exit_v2(
+39544:  def long_grind_adjust_trade_position_v3(
+40838:  def long_grind_entry_v3(
+40855:  def long_rebuy_entry_v3(
+40872:  def long_grind_adjust_trade_position(
+42983:  def long_grind_entry(
+43073:  def long_adjust_trade_position_no_derisk(
+44540:  def long_rebuy_adjust_trade_position(
+44727:  def long_rebuy_adjust_trade_position_v3(
+44902:  def short_exit_normal(
+45161:  def short_exit_pump(
+45412:  def short_exit_quick(
+45702:  def short_exit_rebuy(
+45946:  def short_exit_high_profit(
+46176:  def short_exit_rapid(
+46475:  def short_exit_grind(
+46506:  def short_exit_top_coins(
+46763:  def short_exit_scalp(
+47012:  def short_exit_signals(
+47109:  def short_exit_main(
+47212:  def short_exit_williams_r(
+48899:  def short_exit_dec(
+62624:  def short_exit_stoploss(
+62747:  def short_grind_adjust_trade_position_v2(
+64767:  def short_buyback_entry_v2(
+64858:  def short_grind_entry_v2(
+65107:  def short_buyback_exit_v2(
+65122:  def short_grind_exit_v2(
+65139:  def short_grind_adjust_trade_position_v3(
+66432:  def short_grind_entry_v3(
+66449:  def short_rebuy_entry_v3(
+66468:  def short_grind_adjust_trade_position(
+68517:  def short_grind_entry(
+68607:  def short_adjust_trade_position_no_derisk(
+70074:  def short_rebuy_adjust_trade_position(
+70251:  def short_rebuy_adjust_trade_position_v3(
+70404:def is_support(row_data) -> bool:
+70417:def is_resistance(row_data) -> bool:
+70430:def ewo(df, ema1_length=5, ema2_length=35):
+70439:def pivot_points(df: DataFrame, mode="fibonacci") -> Series:
+70476:def heikin_ashi(df, smooth_inputs=False, smooth_outputs=False, length=10):
+70512:def range_percent_change(self, df: DataFrame, method, length: int) -> float:
+70530:def top_percent_change(self, df: DataFrame, length: int) -> float:
+70551:  def __init__(self, path):
+70562:  def rapidjson_load_kwargs():
+70566:  def rapidjson_dump_kwargs():
+70569:  def load(self):
+70573:  def save(self):
+70577:  def process_loaded_data(self, data):
+70580:  def _load(self):
+70592:  def _save(self):
+70601:  def rapidjson_load_kwargs():
+70609:  def rapidjson_dump_kwargs():
+70615:  def save(self):
+70618:  def process_loaded_data(self, data):
+70729:  def _object_hook(data):
