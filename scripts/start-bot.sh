@@ -18,6 +18,8 @@ source "${SCRIPT_DIR}/lib/common.sh"
 
 # 默认配置
 DEFAULT_CONFIG="${SCRIPT_DIR}/user_data/config-custom.json"
+PRIVATE_CONFIG="${SCRIPT_DIR}/user_data/config-private.json"
+DEFAULT_STRATEGY="NostalgiaForInfinityX7"  # 默认策略
 CONFIG_FILE=""
 STRATEGY=""
 DAEMON_MODE=false
@@ -36,10 +38,14 @@ Freqtrade Bot 启动脚本
 
 选项:
     -h, --help              显示此帮助信息
-    -c, --config FILE       指定配置文件（默认: user_data/config-custom.json）
+    -c, --config FILE       指定主配置文件（默认: user_data/config-custom.json）
     -s, --strategy NAME     指定策略名称（覆盖配置文件中的策略）
     -d, --daemon            后台运行模式
     --stop                  停止运行中的 Bot
+
+配置文件加载顺序:
+    1. 主配置文件（-c 指定或默认 config-custom.json）
+    2. 私有配置文件（user_data/config-private.json，如果存在）
 
 示例:
     $0                                          # 使用默认配置启动
@@ -137,14 +143,21 @@ start_bot() {
     local freqtrade_bin="${VENV_PATH}/bin/freqtrade"
     local cmd_array=("$freqtrade_bin" "trade" "--config" "$CONFIG_FILE")
 
-    # 如果指定了策略，添加到命令中
-    if [ -n "$STRATEGY" ]; then
-        cmd_array+=("--strategy" "$STRATEGY")
+    # 如果 config-private.json 存在，也加载它
+    if [ -f "$PRIVATE_CONFIG" ]; then
+        cmd_array+=("--config" "$PRIVATE_CONFIG")
+        print_info "私有配置: $PRIVATE_CONFIG"
     fi
 
-    print_info "配置文件: $CONFIG_FILE"
-    if [ -n "$STRATEGY" ]; then
-        print_info "策略: $STRATEGY"
+    # 添加策略（用户指定的或默认策略）
+    local strategy_to_use="${STRATEGY:-$DEFAULT_STRATEGY}"
+    if [ -n "$strategy_to_use" ]; then
+        cmd_array+=("--strategy" "$strategy_to_use")
+    fi
+
+    print_info "主配置文件: $CONFIG_FILE"
+    if [ -n "$strategy_to_use" ]; then
+        print_info "策略: $strategy_to_use"
     fi
     print_success "启动命令准备完成"
 
