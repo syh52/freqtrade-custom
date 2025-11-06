@@ -20,6 +20,13 @@ build_helpers/ta-lib/*
 # Macos related
 .DS_Store
 
+# Backup files
+*.bak
+*~
+
+# Playwright MCP screenshots and test artifacts
+.playwright-mcp/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

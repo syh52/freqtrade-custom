@@ -17,8 +17,8 @@ if lsof -Pi :8080 -sTCP:LISTEN -t >/dev/null 2>&1; then
 fi
 
 # 检查配置文件
-if [ ! -f "user_data/config-backtest.json" ]; then
-    echo "❌ 错误：未找到回测配置文件 user_data/config-backtest.json"
+if [ ! -f "user_data/config-backtest-nfx7-nogrind-55pairs.json" ]; then
+    echo "❌ 错误：未找到回测配置文件 user_data/config-backtest-nfx7-nogrind-55pairs.json"
     exit 1
 fi
 
@@ -30,8 +30,9 @@ echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "  配置信息："
 echo "  - 模式: 回测模式（Web UI）"
-echo "  - 配置: config-backtest.json"
-echo "  - 交易对: 34个静态列表"
+echo "  - 配置: config-backtest-nfx7-nogrind-55pairs.json"
+echo "  - 策略: NostalgiaForInfinityX7 (NoGrind)"
+echo "  - 交易对: 55个交易对"
 echo "  - API 地址: http://127.0.0.1:8080"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
@@ -40,4 +41,4 @@ echo "[INFO] 访问地址: http://127.0.0.1:8080"
 echo "[INFO] 按 Ctrl+C 停止服务"
 echo ""
 
-freqtrade webserver --config user_data/config-backtest.json
+freqtrade webserver --config user_data/config-backtest-nfx7-nogrind-55pairs.json

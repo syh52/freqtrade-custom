@@ -162,23 +162,54 @@ start_ui() {
         print_info "按 Ctrl+C 停止服务"
         echo ""
 
-        # 如果需要打开浏览器，在后台启动 FreqUI 之前先打开
+        # 如果需要打开浏览器，创建智能打开脚本
         if [ "$OPEN_BROWSER" = true ]; then
-            print_info "步骤 5/5: 打开浏览器..."
-            ( sleep 5 && open_browser ) &
+            print_info "步骤 5/5: 启动浏览器监控..."
+            # 后台进程：监控日志并在检测到端口后打开浏览器
+            (
+                # 等待日志文件出现并包含端口信息
+                for i in {1..30}; do
+                    sleep 1
+                    if [ -f "$LOG_FILE" ]; then
+                        local detected_port=$(grep -oP "Local:.*?localhost:\K\d+" "$LOG_FILE" 2>/dev/null | tail -1)
+                        if [ -n "$detected_port" ]; then
+                            FREQUI_URL="http://127.0.0.1:${detected_port}"
+                            print_info "检测到端口 $detected_port，正在打开浏览器..."
+                            if command -v cmd.exe > /dev/null 2>&1; then
+                                cmd.exe /c start "$FREQUI_URL" 2>/dev/null
+                            elif command -v xdg-open > /dev/null 2>&1; then
+                                xdg-open "$FREQUI_URL" 2>/dev/null
+                            elif command -v open > /dev/null 2>&1; then
+                                open "$FREQUI_URL" 2>/dev/null
+                            fi
+                            break
+                        fi
+                    fi
+                done
+            ) &
         fi
 
-        # 前台运行 npm
-        npm run dev
+        # 前台运行 npm，同时输出到日志文件（用于端口检测）
+        npm run dev 2>&1 | tee "$LOG_FILE"
         exit 0
     fi
 
-    # 步骤 5: 打开浏览器（仅后台模式）
+    # 检测实际运行的端口（从日志中获取）
+    print_info "步骤 5/5: 检测实际端口..."
+    sleep 1
+    local actual_port=$(grep -oP "Local:.*?localhost:\K\d+" "$LOG_FILE" 2>/dev/null | tail -1)
+    if [ -z "$actual_port" ]; then
+        actual_port=$UI_PORT
+    fi
+
+    # 更新 URL（用于 Windows/WSL 环境，使用 127.0.0.1 可通过 WSL2 自动端口转发访问）
+    FREQUI_URL="http://127.0.0.1:${actual_port}"
+    BOT_API_URL="http://127.0.0.1:${BOT_PORT}"
+
+    # 打开浏览器（使用检测到的实际端口）
     if [ "$OPEN_BROWSER" = true ]; then
-        print_info "步骤 5/5: 打开浏览器..."
+        print_info "正在打开浏览器..."
         open_browser
-    else
-        print_info "步骤 5/5: 跳过打开浏览器"
     fi
 
     # 显示启动信息
@@ -189,6 +220,11 @@ start_ui() {
     echo "  📱 FreqUI 界面:  $FREQUI_URL"
     echo "  🤖 Bot API:      $BOT_API_URL"
     echo ""
+    if command -v cmd.exe > /dev/null 2>&1; then
+        # WSL 环境提示
+        print_info "💡 在 Windows 浏览器中访问上述地址即可（WSL2 自动端口转发）"
+        echo ""
+    fi
     echo "  🔐 登录信息 (在 FreqUI 中使用):"
     echo "    - Bot 名称:  实盘Bot (任意)"
     echo "    - API 地址:  $BOT_API_URL"

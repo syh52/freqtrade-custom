@@ -197,6 +197,11 @@ start_bot() {
         echo "  🔗 API 地址:   http://127.0.0.1:$BOT_PORT"
         echo "  📊 日志文件:   $LOG_FILE"
         echo ""
+        if command -v cmd.exe > /dev/null 2>&1; then
+            # WSL 环境提示
+            print_info "💡 在 Windows 上可通过 http://127.0.0.1:$BOT_PORT 访问 Bot API"
+            echo ""
+        fi
         echo "  查看日志:     tail -f $LOG_FILE"
         echo "  停止服务:     $0 --stop"
         print_separator
