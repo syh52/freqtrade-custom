@@ -38,6 +38,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!lib/common.sh
 lib64/
 parts/
 sdist/

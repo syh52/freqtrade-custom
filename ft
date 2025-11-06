@@ -1,0 +1,301 @@
+#!/bin/bash
+
+################################################################################
+# Freqtrade 管理脚本 (主控入口)
+#
+# 功能：
+# - 统一管理 Freqtrade Bot 和 FreqUI 服务
+# - 提供友好的命令行接口
+# - 路由到具体的功能脚本
+################################################################################
+
+# 获取脚本目录
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# 加载共享函数库
+source "${SCRIPT_DIR}/lib/common.sh"
+
+################################################################################
+# 帮助信息
+################################################################################
+
+show_help() {
+    cat << EOF
+Freqtrade 管理脚本
+
+使用方法:
+    ft <命令> [选项]
+
+命令:
+    start               启动服务
+    stop                停止服务
+    restart             重启服务
+    status              查看服务状态
+    help                显示此帮助信息
+
+启动选项 (ft start):
+    --bot               启动 Freqtrade Bot
+    --ui                启动 FreqUI 前端
+    --config FILE       指定 Bot 配置文件
+    --strategy NAME     指定 Bot 策略
+    -d, --daemon        后台运行模式
+    --no-browser        不自动打开浏览器（仅 UI）
+
+停止选项 (ft stop):
+    --bot               停止 Bot
+    --ui                停止 UI
+    --all               停止所有服务（默认）
+
+重启选项 (ft restart):
+    --bot               重启 Bot
+    --ui                重启 UI
+    --all               重启所有服务（默认）
+
+使用示例:
+
+  # 启动服务
+  ft start --bot --ui               # 启动实盘 Bot + FreqUI
+  ft start --ui                     # 只启动 FreqUI (用于分析/回测)
+  ft start --bot --config user_data/config-dryrun.json
+  ft start --bot --strategy NostalgiaForInfinityX7
+
+  # 停止服务
+  ft stop --all                     # 停止所有服务
+  ft stop --bot                     # 只停止 Bot
+  ft stop --ui                      # 只停止 UI
+
+  # 查看状态
+  ft status                         # 查看所有服务状态
+
+  # 重启服务
+  ft restart --all                  # 重启所有服务
+  ft restart --bot                  # 只重启 Bot
+
+EOF
+    exit 0
+}
+
+################################################################################
+# 启动服务
+################################################################################
+
+cmd_start() {
+    local start_bot=false
+    local start_ui=false
+    local bot_args=()
+    local ui_args=()
+
+    # 解析参数
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --bot)
+                start_bot=true
+                shift
+                ;;
+            --ui)
+                start_ui=true
+                shift
+                ;;
+            --config)
+                bot_args+=("--config" "$2")
+                shift 2
+                ;;
+            --strategy)
+                bot_args+=("--strategy" "$2")
+                shift 2
+                ;;
+            -d|--daemon)
+                bot_args+=("--daemon")
+                ui_args+=("--daemon")
+                shift
+                ;;
+            --no-browser)
+                ui_args+=("--no-browser")
+                shift
+                ;;
+            *)
+                print_error "未知选项: $1"
+                echo "使用 'ft help' 查看帮助"
+                exit 1
+                ;;
+        esac
+    done
+
+    # 如果没有指定启动项，显示错误
+    if [ "$start_bot" = false ] && [ "$start_ui" = false ]; then
+        print_error "请至少指定一个服务: --bot 或 --ui"
+        echo ""
+        echo "示例:"
+        echo "  ft start --bot --ui    # 启动 Bot + UI"
+        echo "  ft start --ui          # 只启动 UI"
+        echo ""
+        echo "使用 'ft help' 查看完整帮助"
+        exit 1
+    fi
+
+    # 启动 Bot
+    if [ "$start_bot" = true ]; then
+        "${SCRIPT_DIR}/scripts/start-bot.sh" "${bot_args[@]}"
+        local bot_exit_code=$?
+        if [ $bot_exit_code -ne 0 ]; then
+            print_error "Bot 启动失败"
+            exit $bot_exit_code
+        fi
+    fi
+
+    # 启动 UI（如果 Bot 在前台运行，则不启动 UI）
+    if [ "$start_ui" = true ]; then
+        # 检查是否 Bot 在前台运行（没有 --daemon 参数）
+        local daemon_mode=false
+        for arg in "${bot_args[@]}"; do
+            if [ "$arg" = "--daemon" ]; then
+                daemon_mode=true
+                break
+            fi
+        done
+
+        if [ "$start_bot" = true ] && [ "$daemon_mode" = false ]; then
+            print_warning "Bot 在前台运行，跳过 UI 启动"
+            print_info "提示: 使用 -d 或 --daemon 参数让 Bot 后台运行"
+            exit 0
+        fi
+
+        "${SCRIPT_DIR}/scripts/start-ui.sh" "${ui_args[@]}"
+        local ui_exit_code=$?
+        if [ $ui_exit_code -ne 0 ]; then
+            print_error "UI 启动失败"
+            exit $ui_exit_code
+        fi
+    fi
+}
+
+################################################################################
+# 停止服务
+################################################################################
+
+cmd_stop() {
+    local args=()
+
+    # 解析参数
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --bot|--ui|--all)
+                args+=("$1")
+                shift
+                ;;
+            *)
+                print_error "未知选项: $1"
+                echo "使用 'ft help' 查看帮助"
+                exit 1
+                ;;
+        esac
+    done
+
+    # 如果没有参数，默认停止所有服务
+    if [ ${#args[@]} -eq 0 ]; then
+        args+=("--all")
+    fi
+
+    "${SCRIPT_DIR}/scripts/stop.sh" "${args[@]}"
+}
+
+################################################################################
+# 重启服务
+################################################################################
+
+cmd_restart() {
+    local args=()
+
+    # 解析参数
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --bot|--ui|--all)
+                args+=("$1")
+                shift
+                ;;
+            *)
+                print_error "未知选项: $1"
+                echo "使用 'ft help' 查看帮助"
+                exit 1
+                ;;
+        esac
+    done
+
+    # 如果没有参数，默认重启所有服务
+    if [ ${#args[@]} -eq 0 ]; then
+        args+=("--all")
+    fi
+
+    print_header "重启 Freqtrade 服务"
+
+    # 停止服务
+    "${SCRIPT_DIR}/scripts/stop.sh" "${args[@]}"
+
+    # 等待服务完全停止
+    sleep 2
+
+    # 启动服务
+    if [[ " ${args[@]} " =~ " --all " ]]; then
+        cmd_start --bot --ui --daemon
+    elif [[ " ${args[@]} " =~ " --bot " ]]; then
+        cmd_start --bot --daemon
+    elif [[ " ${args[@]} " =~ " --ui " ]]; then
+        cmd_start --ui
+    fi
+}
+
+################################################################################
+# 查看状态
+################################################################################
+
+cmd_status() {
+    "${SCRIPT_DIR}/scripts/status.sh"
+}
+
+################################################################################
+# 主程序
+################################################################################
+
+# 检查是否提供了命令
+if [ $# -eq 0 ]; then
+    print_error "缺少命令"
+    echo ""
+    echo "使用方法: ft <命令> [选项]"
+    echo ""
+    echo "常用命令:"
+    echo "  ft start --bot --ui    # 启动 Bot + UI"
+    echo "  ft stop --all          # 停止所有服务"
+    echo "  ft status              # 查看状态"
+    echo ""
+    echo "使用 'ft help' 查看完整帮助"
+    exit 1
+fi
+
+# 获取命令
+COMMAND=$1
+shift
+
+# 路由到对应的命令处理函数
+case $COMMAND in
+    start)
+        cmd_start "$@"
+        ;;
+    stop)
+        cmd_stop "$@"
+        ;;
+    restart)
+        cmd_restart "$@"
+        ;;
+    status)
+        cmd_status "$@"
+        ;;
+    help|--help|-h)
+        show_help
+        ;;
+    *)
+        print_error "未知命令: $COMMAND"
+        echo ""
+        echo "使用 'ft help' 查看可用命令"
+        exit 1
+        ;;
+esac
