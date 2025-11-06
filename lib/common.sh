@@ -153,7 +153,8 @@ find_bot_process() {
 # 查找 FreqUI 进程
 # 返回: 进程 ID 列表（可能为空）
 find_ui_process() {
-    pgrep -f "vite.*frequi\|npm.*dev.*frequi" 2>/dev/null || true
+    # 查找 vite 进程（通过检查工作目录是否包含 frequi）
+    ps aux | grep -E "vite|npm.*dev" | grep -v grep | grep "frequi" | awk '{print $2}' || true
 }
 
 # 优雅停止进程
