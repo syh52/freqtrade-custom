@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Freqtrade is a cryptocurrency trading bot written in Python. It supports backtesting, strategy optimization via machine learning (hyperopt), live trading with multiple exchanges, and includes a WebUI and Telegram bot interface.
+Freqtrade is a cryptocurrency trading bot written in Python. This is a production deployment configured for futures trading with NostalgiaForInfinityX7 strategy on Binance with 14x leverage.
 
 **Key Architecture Components:**
 - **FreqtradeBot** (`freqtrade/freqtradebot.py`): Main bot class orchestrating trading logic
@@ -34,6 +34,80 @@ pip install -r requirements-hyperopt.txt  # Strategy optimization
 pip install -r requirements-plot.txt      # Plotting functionality
 pip install -r requirements-freqai.txt    # Machine learning features
 ```
+
+## Project-Specific: Startup Scripts
+
+This project uses a modular script architecture for managing services:
+
+### Recommended: ft Command-Line Tool
+
+**Main control script with modular architecture:**
+```bash
+# Start services
+./ft start --bot --ui -d              # Start both Bot and UI in background
+./ft start --bot -d                   # Start only Bot
+./ft start --ui                       # Start only UI
+./ft start --bot --config <file> --strategy <name> -d
+
+# Manage services
+./ft status                           # Check service status
+./ft stop --all                       # Stop all services
+./ft stop --bot                       # Stop only Bot
+./ft restart --all                    # Restart all services
+./ft help                             # Show all options
+```
+
+**Architecture:**
+- `ft`: Main controller routing commands to specialized scripts
+- `scripts/start-bot.sh`: Bot startup with health checks and graceful shutdown
+- `scripts/start-ui.sh`: FreqUI startup (requires FreqUI in `/home/dministrator/Newproject/frequi`)
+- `scripts/stop.sh`: Graceful service shutdown
+- `scripts/status.sh`: Service status display
+- `lib/common.sh`: Shared functions (port management, process handling, health checks)
+
+**Key features:**
+- Graceful process termination (TERM → KILL fallback)
+- Precise port management (8082 for Bot API, 3000 for UI)
+- Real-time health checks via API ping
+- Support for custom configs and strategies
+
+### Legacy Scripts (Quick Start)
+
+```bash
+./start_all.sh              # One-click start Bot + UI (hardcoded config)
+./start_bot_only.sh         # Bot only (no UI)
+```
+
+## Configuration Architecture
+
+**Modular configuration system using `add_config_files`:**
+
+```
+user_data/
+├── config-custom.json              # Main config (loads modules below)
+├── config-private.json             # API keys (NOT in git)
+└── config-backtest-*.json          # Backtest-specific configs
+
+configs/                             # Config modules (auto-loaded)
+├── trading_mode-futures.json       # Futures trading settings
+├── pairlist-volume-binance-usdt.json  # Dynamic pairlist (VolumePairList)
+└── blacklist-binance.json          # Excluded pairs
+```
+
+**Current production config:**
+- Trading mode: Futures (isolated margin, 14x leverage)
+- Strategy: NostalgiaForInfinityX7 v17.1.94
+- Max open trades: 12 (9 long + 3 short)
+- Dynamic pairlist: ~73 USDT pairs (30min refresh)
+- Timeframe: 5m
+- Bot API: http://127.0.0.1:8082
+- Credentials: `freqtrade_user` / `freqtrade_pass123`
+
+**Config cascade:**
+1. `config-custom.json` loads modules via `add_config_files`
+2. `config-private.json` overlays API keys
+3. Strategy parameters override config
+4. CLI arguments override all
 
 ## Testing
 
@@ -88,6 +162,12 @@ freqtrade trade --config user_data/config.json
 ```bash
 # Logs are stored in user_data/logs/
 tail -f user_data/logs/freqtrade.log
+```
+
+**Check Bot API health:**
+```bash
+curl http://127.0.0.1:8082/api/v1/ping
+curl http://127.0.0.1:8082/api/v1/status | python3 -m json.tool
 ```
 
 ## Code Quality
@@ -154,6 +234,15 @@ freqtrade backtesting \
   --timerange 20240101-20241031
 ```
 
+**Project-specific backtesting (with dynamic pairlist):**
+```bash
+freqtrade backtesting \
+  --config user_data/config-custom.json \
+  --config user_data/config-private.json \
+  --strategy NostalgiaForInfinityX7 \
+  --timerange 20240101-20241231
+```
+
 **Hyperparameter optimization:**
 ```bash
 freqtrade hyperopt \
@@ -163,18 +252,16 @@ freqtrade hyperopt \
   --spaces buy sell
 ```
 
-**Start live/dry-run trading:**
+**Test pairlist generation:**
 ```bash
-freqtrade trade --config user_data/config.json
-```
+# Must set proxy for this project
+export https_proxy=http://127.0.0.1:7897
+export http_proxy=http://127.0.0.1:7897
 
-**Launch web UI:**
-```bash
-# Recommended: Use the provided startup script
-./start_webui.sh
-
-# Or manually:
-freqtrade webserver --config user_data/config.json
+freqtrade test-pairlist \
+  --config user_data/config-custom.json \
+  --config user_data/config-private.json \
+  --quote USDT
 ```
 
 ## Strategy Development
@@ -192,6 +279,15 @@ freqtrade webserver --config user_data/config.json
 - `startup_candle_count`: Number of candles needed before generating signals
 - `can_short`: Boolean enabling short positions (futures trading)
 - `position_adjustment_enable`: Boolean for DCA/position adjustment
+
+**NostalgiaForInfinityX7 specifics:**
+- Timeframe: 5m (must not be overridden)
+- Startup candles: 800
+- Supports long and short positions
+- Multiple entry modes (normal, pump, quick, rebuy, high profit, rapid, grind, top coins, scalp)
+- Recommended: 6-12 open trades, 40-80 pairs, volume-based pairlist
+- Must use stable coin pairs (USDT/USDC)
+- Must blacklist leveraged tokens
 
 **Testing strategies:**
 ```bash
@@ -286,18 +382,30 @@ freqtrade backtesting \
 - Type hints on all public methods
 - English for all comments, variable names, commit messages
 
-## Project-Specific Scripts
+## Project-Specific Notes
 
-**Web UI startup script:**
+**Proxy configuration:**
+This deployment requires proxy for exchange access:
 ```bash
-./start_webui.sh
+export https_proxy=http://127.0.0.1:7897
+export http_proxy=http://127.0.0.1:7897
 ```
-This is the recommended way to launch the web UI interface for this project.
 
-**Manual position testing:**
-```bash
-./manual_position_test.sh
-```
+**FreqUI location:**
+FreqUI is located at `/home/dministrator/Newproject/frequi` (separate repository)
+
+**Sensitive files (NOT in git):**
+- `user_data/config-private.json` - API keys
+- `user_data/tradesv3.sqlite` - Trade database
+- `user_data/logs/` - Log files
+
+**Project documentation:**
+- `START_HERE.md` - New user onboarding
+- `PROJECT_README.md` - Project overview and architecture
+- `QUICK_START.md` - Detailed startup guide
+- `CONFIG_USAGE_GUIDE.md` - Configuration reference
+- `BACKTEST_GUIDE.md` - Backtesting guide
+- `docs/plans/2025-11-06-script-simplification-design.md` - Script architecture design
 
 ## Important References
 
@@ -308,3 +416,4 @@ This is the recommended way to launch the web UI interface for this project.
 - **FreqAI Guide:** https://www.freqtrade.io/en/stable/freqai/
 - **Exchange Configuration:** https://www.freqtrade.io/en/stable/exchanges/
 - **Discord Support:** https://discord.gg/p7nuUNVfP7
+- **NostalgiaForInfinity Strategy:** https://iterativv.github.io/NostalgiaForInfinity/

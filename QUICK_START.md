@@ -11,9 +11,81 @@
 
 ## 🎯 场景1：实盘交易
 
-### 方法1：只启动Bot（推荐，简单稳定）
+### ⭐ 推荐方式：使用 ft 主控脚本（模块化架构）
+
+**一键启动Bot + Web UI（后台运行）：**
+```bash
+./ft start --bot --ui -d
+```
+
+**查看服务状态：**
+```bash
+./ft status
+```
+
+**停止所有服务：**
+```bash
+./ft stop --all
+```
+
+**更多命令：**
+```bash
+# 只启动Bot（后台运行）
+./ft start --bot -d
+
+# 只启动Web UI
+./ft start --ui
+
+# 指定配置文件和策略
+./ft start --bot --config user_data/config-custom.json --strategy NostalgiaForInfinityX7 -d
+
+# 停止指定服务
+./ft stop --bot      # 只停止Bot
+./ft stop --ui       # 只停止UI
+
+# 重启服务
+./ft restart --all   # 重启所有服务
+./ft restart --bot   # 只重启Bot
+
+# 查看帮助
+./ft help
+```
+
+**优势：**
+- ✅ 模块化设计，职责清晰
+- ✅ 优雅停止进程（避免数据损坏）
+- ✅ 精确的端口管理（不误杀其他进程）
+- ✅ 实时健康检查（API验证）
+- ✅ 灵活组合（可独立启动/停止任意服务）
+
+**Web UI 登录信息：**
+- API地址: `http://127.0.0.1:8082`
+- 用户名: `freqtrade_user`
+- 密码: `freqtrade_pass123`
+
+---
+
+### 方法2：传统一键启动脚本（兼容旧版）
 
 ```bash
+./start_all.sh
+```
+
+**特点：**
+- ✅ 一键启动Bot和UI
+- ✅ 自动打开浏览器
+- ⚠️ 使用固定配置（NostalgiaForInfinityX7策略）
+- ⚠️ 无法灵活控制单个服务
+
+---
+
+### 方法3：只启动Bot（无Web界面）
+
+```bash
+# 使用ft脚本（推荐）
+./ft start --bot -d
+
+# 或使用传统脚本
 ./start_bot_only.sh
 ```
 
@@ -36,18 +108,19 @@ tail -f user_data/logs/freqtrade.log
 
 ---
 
-### 方法2：Bot + FreqUI（需要Web界面）
+### 方法4：分别启动Bot和UI（高级用户）
 
 ```bash
 # 第1步：启动Bot
-./start_bot_only.sh
+./scripts/start-bot.sh -d
 
-# 第2步：单独启动FreqUI（新终端）
+# 第2步：启动FreqUI（新终端）
+./scripts/start-ui.sh
+
+# 或手动启动FreqUI
 cd /home/dministrator/Newproject/frequi
 npm run dev
 ```
-
-然后浏览器打开显示的URL（通常是 http://127.0.0.1:3000 或其他端口）
 
 ---
 
@@ -160,6 +233,27 @@ freqtrade show-config \
 
 ## 🛑 停止服务
 
+### 推荐方式：使用 ft 脚本
+
+```bash
+# 停止所有服务
+./ft stop --all
+
+# 停止指定服务
+./ft stop --bot      # 只停止Bot
+./ft stop --ui       # 只停止UI
+```
+
+### 传统方式：使用脚本
+
+```bash
+# 使用独立脚本
+./scripts/start-bot.sh --stop
+./scripts/start-ui.sh --stop
+```
+
+### 手动方式
+
 ```bash
 # 停止Bot
 pkill -f "freqtrade trade"
@@ -213,4 +307,14 @@ curl http://127.0.0.1:8082/api/v1/ping
 
 ---
 
-**最后更新：** 2025-11-06
+## 📘 更多文档
+
+- **[PROJECT_README.md](./PROJECT_README.md)** - 项目部署总览和架构说明
+- **[CONFIG_USAGE_GUIDE.md](./CONFIG_USAGE_GUIDE.md)** - 配置文件详解
+- **[BACKTEST_GUIDE.md](./BACKTEST_GUIDE.md)** - 回测指南
+- **[docs/plans/2025-11-06-script-simplification-design.md](./docs/plans/2025-11-06-script-simplification-design.md)** - 脚本架构设计文档
+
+---
+
+**最后更新：** 2025-01-06
+**脚本版本：** ft v2.0（模块化架构）
