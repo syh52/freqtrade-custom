@@ -1,0 +1,407 @@
+2025-11-08 03:28:29,954 - freqtrade - INFO - freqtrade 2025.11-dev-f73c1cc24
+2025-11-08 03:28:30,240 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2025-11-08 03:28:31,374 - freqtrade.loggers - INFO - Enabling colorized output.
+2025-11-08 03:28:31,374 - freqtrade.loggers - INFO - Logfile configured
+2025-11-08 03:28:31,375 - freqtrade.loggers - INFO - Verbosity set to 0
+2025-11-08 03:28:31,375 - freqtrade.configuration.configuration - INFO - Parameter --timerange detected: 20250501-20251108 ...
+2025-11-08 03:28:31,375 - freqtrade.configuration.configuration - INFO - Using exchange binance
+2025-11-08 03:28:31,376 - freqtrade.configuration.configuration - INFO - Using user-data directory: /home/dministrator/Newproject/freqtrade/user_data ...
+2025-11-08 03:28:31,376 - freqtrade.configuration.configuration - INFO - Using data directory: /home/dministrator/Newproject/freqtrade/user_data/data/binance ...
+2025-11-08 03:28:31,377 - freqtrade.configuration.configuration - INFO - Using pairs ['1INCH/USDT:USDT', 'ACT/USDT:USDT', 'AERO/USDT:USDT', 'AI/USDT:USDT', 'AIXBT/USDT:USDT', 'ANKR/USDT:USDT', 
+'BAND/USDT:USDT', 'BRETT/USDT:USDT', 'CELO/USDT:USDT', 'CETUS/USDT:USDT', 'CHILLGUY/USDT:USDT', 'COAI/USDT:USDT', 'CYBER/USDT:USDT', 'DUSK/USDT:USDT', 'EGLD/USDT:USDT', 'EIGEN/USDT:USDT', 
+'ENA/USDT:USDT', 'ENS/USDT:USDT', 'ETHFI/USDT:USDT', 'FARTCOIN/USDT:USDT', 'FLOW/USDT:USDT', 'FLUID/USDT:USDT', 'FXS/USDT:USDT', 'GOAT/USDT:USDT', 'GRT/USDT:USDT', 'HIGH/USDT:USDT', 'HOOK/USDT:USDT', 
+'ICP/USDT:USDT', 'JTO/USDT:USDT', 'JUP/USDT:USDT', 'KAIA/USDT:USDT', 'KAS/USDT:USDT', 'LPT/USDT:USDT', 'LQTY/USDT:USDT', 'METIS/USDT:USDT', 'MEW/USDT:USDT', 'MINA/USDT:USDT', 'MOODENG/USDT:USDT', 
+'MORPHO/USDT:USDT', 'NAORIS/USDT:USDT', 'NEIRO/USDT:USDT', 'PNUT/USDT:USDT', 'PONKE/USDT:USDT', 'POPCAT/USDT:USDT', 'PUFFER/USDT:USDT', 'QTUM/USDT:USDT', 'RESOLV/USDT:USDT', 'RONIN/USDT:USDT']
+2025-11-08 03:28:31,377 - freqtrade.configuration.configuration - INFO - timeframes --timeframes: ['5m', '15m', '1h', '4h', '1d']
+2025-11-08 03:28:31,377 - freqtrade.configuration.configuration - INFO - Detected --trading-mode: futures
+2025-11-08 03:28:31,377 - freqtrade.configuration.configuration - INFO - Filter trades by timerange: 20250501-20251108
+2025-11-08 03:28:31,378 - freqtrade.exchange.check_exchange - INFO - Checking exchange...
+2025-11-08 03:28:31,386 - freqtrade.exchange.check_exchange - INFO - Exchange "binance" is officially supported by the Freqtrade development team.
+2025-11-08 03:28:31,387 - freqtrade.configuration.config_validation - INFO - Validating configuration ...
+2025-11-08 03:28:31,412 - freqtrade.exchange.exchange - INFO - Instance is running with dry_run enabled
+2025-11-08 03:28:31,412 - freqtrade.exchange.exchange - INFO - Using CCXT 4.5.12
+2025-11-08 03:28:31,413 - freqtrade.exchange.exchange - INFO - Applying additional ccxt config: {'options': {'defaultType': 'swap'}}
+2025-11-08 03:28:31,421 - freqtrade.exchange.exchange - INFO - Applying additional ccxt config: {'options': {'defaultType': 'swap'}}
+2025-11-08 03:28:31,429 - freqtrade.exchange.exchange - INFO - Using Exchange "Binance"
+2025-11-08 03:28:31,430 - freqtrade.resolvers.exchange_resolver - INFO - Using resolved exchange 'Binance'...
+2025-11-08 03:28:31,431 - freqtrade.exchange.exchange - INFO - Markets were not loaded. Loading them now..
+2025-11-08 03:28:41,786 - freqtrade.exchange.common - WARNING - _load_async_markets() returned exception: "Error in reload_markets due to RequestTimeout. Message: binance GET 
+https://fapi.binance.com/fapi/v1/exchangeInfo". Retrying still for 3 times.
+2025-11-08 03:28:52,786 - freqtrade.exchange.common - WARNING - _load_async_markets() returned exception: "Error in reload_markets due to RequestTimeout. Message: binance GET 
+https://api.binance.com/api/v3/exchangeInfo". Retrying still for 2 times.
+2025-11-08 03:29:03,785 - freqtrade.exchange.common - WARNING - _load_async_markets() returned exception: "Error in reload_markets due to RequestTimeout. Message: binance GET 
+https://fapi.binance.com/fapi/v1/exchangeInfo". Retrying still for 1 times.
+2025-11-08 03:29:14,786 - freqtrade.exchange.common - WARNING - _load_async_markets() returned exception: "Error in reload_markets due to RequestTimeout. Message: binance GET 
+https://api.binance.com/api/v3/exchangeInfo". Giving up.
+2025-11-08 03:29:14,786 - freqtrade.exchange.exchange - ERROR - Could not load markets.
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 786, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 741, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1550, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1268, in _wrap_create_connection
+    sock = await aiohappyeyeballs.start_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/impl.py", line 87, in start_connection
+    sock, _, _ = await _staggered.staggered_race(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/_staggered.py", line 165, in staggered_race
+    done = await _wait_one(
+           ^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/_staggered.py", line 46, in _wait_one
+    return await wait_next
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 217, in fetch
+    async with session_method(yarl.URL(url, encoded=True),
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 1517, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 624, in _request
+    with timer:
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/helpers.py", line 713, in __exit__
+    raise asyncio.TimeoutError from exc_val
+TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 660, in _api_reload_markets
+    await self._api_async.load_markets(reload=reload, params={})
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 338, in load_markets
+    raise e
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 330, in load_markets
+    result = await self.markets_loading
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 297, in load_markets_helper
+    markets = await self.fetch_markets(params)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/binance.py", line 3103, in fetch_markets
+    results = await asyncio.gather(*promisesRaw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/binance.py", line 11452, in request
+    response = await self.fetch2(path, api, method, params, headers, body, config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 981, in fetch2
+    raise e
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 972, in fetch2
+    return await self.fetch(request['url'], request['method'], request['headers'], request['body'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 253, in fetch
+    raise RequestTimeout(details) from e
+ccxt.base.errors.RequestTimeout: binance GET https://fapi.binance.com/fapi/v1/exchangeInfo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/common.py", line 171, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 673, in _load_async_markets
+    markets = self.loop.run_until_complete(self._api_reload_markets(reload=reload))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 664, in _api_reload_markets
+    raise TemporaryError(
+freqtrade.exceptions.TemporaryError: Error in reload_markets due to RequestTimeout. Message: binance GET https://fapi.binance.com/fapi/v1/exchangeInfo
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 786, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 741, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1550, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1268, in _wrap_create_connection
+    sock = await aiohappyeyeballs.start_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/impl.py", line 87, in start_connection
+    sock, _, _ = await _staggered.staggered_race(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/_staggered.py", line 165, in staggered_race
+    done = await _wait_one(
+           ^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/_staggered.py", line 46, in _wait_one
+    return await wait_next
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 217, in fetch
+    async with session_method(yarl.URL(url, encoded=True),
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 1517, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 624, in _request
+    with timer:
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/helpers.py", line 713, in __exit__
+    raise asyncio.TimeoutError from exc_val
+TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 660, in _api_reload_markets
+    await self._api_async.load_markets(reload=reload, params={})
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 338, in load_markets
+    raise e
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 330, in load_markets
+    result = await self.markets_loading
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 297, in load_markets_helper
+    markets = await self.fetch_markets(params)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/binance.py", line 3103, in fetch_markets
+    results = await asyncio.gather(*promisesRaw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/binance.py", line 11452, in request
+    response = await self.fetch2(path, api, method, params, headers, body, config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 981, in fetch2
+    raise e
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 972, in fetch2
+    return await self.fetch(request['url'], request['method'], request['headers'], request['body'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 253, in fetch
+    raise RequestTimeout(details) from e
+ccxt.base.errors.RequestTimeout: binance GET https://api.binance.com/api/v3/exchangeInfo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/common.py", line 171, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 673, in _load_async_markets
+    markets = self.loop.run_until_complete(self._api_reload_markets(reload=reload))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 664, in _api_reload_markets
+    raise TemporaryError(
+freqtrade.exceptions.TemporaryError: Error in reload_markets due to RequestTimeout. Message: binance GET https://api.binance.com/api/v3/exchangeInfo
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 786, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 741, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1550, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1268, in _wrap_create_connection
+    sock = await aiohappyeyeballs.start_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/impl.py", line 87, in start_connection
+    sock, _, _ = await _staggered.staggered_race(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/_staggered.py", line 165, in staggered_race
+    done = await _wait_one(
+           ^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/_staggered.py", line 46, in _wait_one
+    return await wait_next
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 217, in fetch
+    async with session_method(yarl.URL(url, encoded=True),
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 1517, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 624, in _request
+    with timer:
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/helpers.py", line 713, in __exit__
+    raise asyncio.TimeoutError from exc_val
+TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 660, in _api_reload_markets
+    await self._api_async.load_markets(reload=reload, params={})
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 338, in load_markets
+    raise e
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 330, in load_markets
+    result = await self.markets_loading
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 297, in load_markets_helper
+    markets = await self.fetch_markets(params)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/binance.py", line 3103, in fetch_markets
+    results = await asyncio.gather(*promisesRaw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/binance.py", line 11452, in request
+    response = await self.fetch2(path, api, method, params, headers, body, config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 981, in fetch2
+    raise e
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 972, in fetch2
+    return await self.fetch(request['url'], request['method'], request['headers'], request['body'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 253, in fetch
+    raise RequestTimeout(details) from e
+ccxt.base.errors.RequestTimeout: binance GET https://fapi.binance.com/fapi/v1/exchangeInfo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/common.py", line 171, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 673, in _load_async_markets
+    markets = self.loop.run_until_complete(self._api_reload_markets(reload=reload))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 664, in _api_reload_markets
+    raise TemporaryError(
+freqtrade.exceptions.TemporaryError: Error in reload_markets due to RequestTimeout. Message: binance GET https://fapi.binance.com/fapi/v1/exchangeInfo
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 786, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 741, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1550, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/connector.py", line 1268, in _wrap_create_connection
+    sock = await aiohappyeyeballs.start_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/impl.py", line 87, in start_connection
+    sock, _, _ = await _staggered.staggered_race(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/_staggered.py", line 165, in staggered_race
+    done = await _wait_one(
+           ^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohappyeyeballs/_staggered.py", line 46, in _wait_one
+    return await wait_next
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 217, in fetch
+    async with session_method(yarl.URL(url, encoded=True),
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 1517, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/client.py", line 624, in _request
+    with timer:
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/aiohttp/helpers.py", line 713, in __exit__
+    raise asyncio.TimeoutError from exc_val
+TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 660, in _api_reload_markets
+    await self._api_async.load_markets(reload=reload, params={})
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 338, in load_markets
+    raise e
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 330, in load_markets
+    result = await self.markets_loading
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 297, in load_markets_helper
+    markets = await self.fetch_markets(params)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/binance.py", line 3103, in fetch_markets
+    results = await asyncio.gather(*promisesRaw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/binance.py", line 11452, in request
+    response = await self.fetch2(path, api, method, params, headers, body, config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 981, in fetch2
+    raise e
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 972, in fetch2
+    return await self.fetch(request['url'], request['method'], request['headers'], request['body'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/.venv/lib/python3.12/site-packages/ccxt/async_support/base/exchange.py", line 253, in fetch
+    raise RequestTimeout(details) from e
+ccxt.base.errors.RequestTimeout: binance GET https://api.binance.com/api/v3/exchangeInfo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 700, in reload_markets
+    retrier(self._load_async_markets, retries=retries)(reload=True)
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/common.py", line 183, in wrapper
+    return wrapper(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/common.py", line 183, in wrapper
+    return wrapper(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/common.py", line 183, in wrapper
+    return wrapper(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/common.py", line 186, in wrapper
+    raise ex
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/common.py", line 171, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 673, in _load_async_markets
+    markets = self.loop.run_until_complete(self._api_reload_markets(reload=reload))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/dministrator/Newproject/freqtrade/freqtrade/exchange/exchange.py", line 664, in _api_reload_markets
+    raise TemporaryError(
+freqtrade.exceptions.TemporaryError: Error in reload_markets due to RequestTimeout. Message: binance GET https://api.binance.com/api/v3/exchangeInfo
+2025-11-08 03:29:14,804 - freqtrade - ERROR - Markets were not loaded.

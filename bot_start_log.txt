@@ -1,0 +1,33 @@
+
+════════════════════════════════════════════════════════════
+  Freqtrade Bot 启动脚本
+════════════════════════════════════════════════════════════
+
+[0;34m[INFO][0m 步骤 1/5: 检查依赖...
+[0;32m[SUCCESS][0m 依赖检查通过
+[0;34m[INFO][0m 步骤 2/5: 检查端口 8082...
+[0;32m[SUCCESS][0m 端口 8082 可用
+[0;34m[INFO][0m 步骤 3/5: 配置环境...
+[0;32m[SUCCESS][0m 环境配置完成
+[0;34m[INFO][0m 步骤 4/5: 准备启动命令...
+[0;34m[INFO][0m 私有配置: /home/dministrator/Newproject/freqtrade/user_data/config-private.json
+[0;34m[INFO][0m 主配置文件: /home/dministrator/Newproject/freqtrade/user_data/config-custom.json
+[0;34m[INFO][0m 策略: NostalgiaForInfinityX7
+[0;32m[SUCCESS][0m 启动命令准备完成
+[0;34m[INFO][0m 步骤 5/5: 启动 Freqtrade Bot...
+
+[0;34m[INFO][0m 后台模式启动...
+[0;34m[INFO][0m 等待 Bot API 就绪...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0;32m[SUCCESS][0m Freqtrade Bot 已启动！
+
+  🤖 进程 ID:    2010781
+  🔗 API 地址:   http://127.0.0.1:8082
+  📊 日志文件:   /home/dministrator/Newproject/freqtrade/user_data/logs/freqtrade.log
+
+[0;34m[INFO][0m 💡 在 Windows 上可通过 http://127.0.0.1:8082 访问 Bot API
+
+  查看日志:     tail -f /home/dministrator/Newproject/freqtrade/user_data/logs/freqtrade.log
+  停止服务:     /home/dministrator/Newproject/freqtrade/scripts/start-bot.sh --stop
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

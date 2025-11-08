@@ -417,3 +417,4 @@ FreqUI is located at `/home/dministrator/Newproject/frequi` (separate repository
 - **Exchange Configuration:** https://www.freqtrade.io/en/stable/exchanges/
 - **Discord Support:** https://discord.gg/p7nuUNVfP7
 - **NostalgiaForInfinity Strategy:** https://iterativv.github.io/NostalgiaForInfinity/
+- 这是我们的默认策略 '/home/dministrator/Newproject/freqtrade/user_data/strategies/NostalgiaForInfinityX7.py'

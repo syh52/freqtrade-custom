@@ -285,32 +285,45 @@ class TradeReplayEngine:
             }
 
         # 最优出场点搜索
-        exit_idx = self.indicators.index.get_indexer([self.close_date], method='nearest')[0]
-        exit_search_start = max(entry_idx, exit_idx - search_window)
-        exit_search_end = min(len(self.indicators), exit_idx + search_window)
-        exit_search_candles = self.indicators.iloc[exit_search_start:exit_search_end]
+        # 关键修复：出场点必须在【最优入场点】之后，而不是实际入场点之后！
+        if 'entry' in optimal:
+            # 获取最优入场点的索引
+            optimal_entry_idx_value = self.indicators.index.get_indexer([optimal_entry_idx], method='nearest')[0]
 
-        if len(exit_search_candles) > 0:
-            # 对于多头：找最高点；对于空头：找最低点
-            if self.is_short:
-                optimal_exit_idx = exit_search_candles['low'].idxmin()
-                optimal_exit_price = exit_search_candles.loc[optimal_exit_idx, 'low']
-            else:
-                optimal_exit_idx = exit_search_candles['high'].idxmax()
-                optimal_exit_price = exit_search_candles.loc[optimal_exit_idx, 'high']
+            # 从最优入场点的下一根K线开始搜索
+            exit_idx = self.indicators.index.get_indexer([self.close_date], method='nearest')[0]
+            exit_search_start = optimal_entry_idx_value + 1  # 从最优入场后的第一根K线开始
+            exit_search_end = min(len(self.indicators), exit_idx + search_window)
 
-            # 计算如果在最优点出场的收益
-            optimal_exit_profit = (optimal_exit_price - self.open_rate) / self.open_rate
-            if self.is_short:
-                optimal_exit_profit = -optimal_exit_profit
+            # 确保搜索范围有效
+            if exit_search_start >= len(self.indicators):
+                exit_search_start = len(self.indicators) - 1
+            if exit_search_start >= exit_search_end:
+                exit_search_end = min(exit_search_start + 5, len(self.indicators))
 
-            optimal['exit'] = {
-                'date': str(optimal_exit_idx),
-                'price': optimal_exit_price,
-                'profit_if_used_pct': optimal_exit_profit * 100,
-                'improvement_pct': (optimal_exit_profit - self.profit_ratio) * 100,
-                'time_diff_minutes': (optimal_exit_idx - self.close_date).total_seconds() / 60
-            }
+            exit_search_candles = self.indicators.iloc[exit_search_start:exit_search_end]
+
+            if len(exit_search_candles) > 0:
+                # 对于多头：找最高点；对于空头：找最低点
+                if self.is_short:
+                    optimal_exit_idx = exit_search_candles['low'].idxmin()
+                    optimal_exit_price = exit_search_candles.loc[optimal_exit_idx, 'low']
+                else:
+                    optimal_exit_idx = exit_search_candles['high'].idxmax()
+                    optimal_exit_price = exit_search_candles.loc[optimal_exit_idx, 'high']
+
+                # 使用最优入场价格计算收益（而不是实际入场价格）
+                optimal_exit_profit = (optimal_exit_price - optimal_entry_price) / optimal_entry_price
+                if self.is_short:
+                    optimal_exit_profit = -optimal_exit_profit
+
+                optimal['exit'] = {
+                    'date': str(optimal_exit_idx),
+                    'price': optimal_exit_price,
+                    'profit_if_used_pct': optimal_exit_profit * 100,
+                    'improvement_pct': (optimal_exit_profit - self.profit_ratio) * 100,
+                    'time_diff_minutes': (optimal_exit_idx - self.close_date).total_seconds() / 60
+                }
 
         # 理论最优收益（最优入场 + 最优出场）
         if 'entry' in optimal and 'exit' in optimal:

@@ -1,0 +1,30 @@
+# 垃圾币候选列表 (用于回测识别)
+# 生成时间: 2025-11-08
+# 总计: 21 个币种 (已有数据)
+# 目标: 70个币种
+# 还需补充: 49个新币种
+
+## 1. 原始候选币种 (未在任何黑名单中)
+BTC/USDT:USDT
+
+## 2. 从黑名单恢复的币种 (20个，排除BNB/USDC)
+1000PEPE/USDT:USDT  # PEPE meme币(1000倍)
+1000SHIB/USDT:USDT  # SHIB meme币(1000倍)
+AXS/USDT:USDT  # Axie Infinity游戏
+BCH/USDT:USDT  # 比特币现金
+BLUR/USDT:USDT  # NFT市场
+ENJ/USDT:USDT  # Enjin游戏平台
+GMT/USDT:USDT  # STEPN运动赚币
+GMX/USDT:USDT  # DeFi衍生品交易
+HBAR/USDT:USDT  # Hedera公链
+HYPE/USDT:USDT  # Hyperliquid
+IMX/USDT:USDT  # Layer2游戏生态
+KAVA/USDT:USDT  # DeFi借贷平台
+MAGIC/USDT:USDT  # Treasure游戏生态
+MANA/USDT:USDT  # Decentraland元宇宙
+NEAR/USDT:USDT  # 主流Layer1公链
+PENDLE/USDT:USDT  # DeFi收益代币化协议
+RUNE/USDT:USDT  # THORChain跨链
+SOL/USDT:USDT  # 主流Layer1公链
+TIA/USDT:USDT  # Celestia模块化区块链
+ZK/USDT:USDT  # zkSync Layer2 

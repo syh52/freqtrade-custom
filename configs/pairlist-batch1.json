@@ -1,0 +1,38 @@
+{
+  "_description": "Batch 1 - Mainstream Blue Chip Pairs (23 pairs)",
+  "_note": "BTC, ETH and other top market cap coins with highest liquidity",
+  "_created": "2025-11-08",
+
+  "exchange": {
+    "pair_whitelist": [
+      "ETH/USDT:USDT",
+      "BTC/USDT:USDT",
+      "XRP/USDT:USDT",
+      "DOGE/USDT:USDT",
+      "LTC/USDT:USDT",
+      "SUI/USDT:USDT",
+      "XPL/USDT:USDT",
+      "HYPE/USDT:USDT",
+      "AVAX/USDT:USDT",
+      "DASH/USDT:USDT",
+      "TAO/USDT:USDT",
+      "ADA/USDT:USDT",
+      "ETC/USDT:USDT",
+      "DOT/USDT:USDT",
+      "ZEN/USDT:USDT",
+      "LINK/USDT:USDT",
+      "VIRTUAL/USDT:USDT",
+      "ENA/USDT:USDT",
+      "PUMP/USDT:USDT",
+      "APT/USDT:USDT",
+      "WLD/USDT:USDT",
+      "TIA/USDT:USDT",
+      "FARTCOIN/USDT:USDT"
+    ]
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ]
+}

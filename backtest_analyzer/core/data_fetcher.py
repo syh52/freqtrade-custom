@@ -31,6 +31,12 @@ class DataFetcher:
         self.exchange = self.config.get('exchange', {}).get('name', 'binance')
         self.default_timeframe = self.config.get('timeframe', '5m')
 
+        # 检测交易模式，决定candle_type（支持config或自动检测）
+        self.trading_mode = self.config.get('trading_mode', 'spot')
+        self.candle_type = 'futures' if self.trading_mode == 'futures' else ''
+
+        # 如果config中没有trading_mode，后续会从pair格式自动检测
+
     def _load_default_config(self) -> Dict:
         """加载默认配置"""
         try:
@@ -71,7 +77,7 @@ class DataFetcher:
         获取指定币种的K线数据
 
         Args:
-            pair: 交易对，如 'BTC/USDT'
+            pair: 交易对，如 'BTC/USDT' 或 'BTC/USDT:USDT'
             timeframe: 时间周期，如 '5m', 默认使用配置中的值
             start_date: 开始时间
             end_date: 结束时间
@@ -81,6 +87,13 @@ class DataFetcher:
             包含K线数据的DataFrame
         """
         timeframe = timeframe or self.default_timeframe
+
+        # 自动检测交易对类型（期货交易对包含 :USDT 后缀）
+        candle_type = self.candle_type
+        if ':USDT' in pair or ':BUSD' in pair:
+            candle_type = 'futures'
+        elif candle_type == '' and self.trading_mode == 'spot':
+            candle_type = ''
 
         try:
             # 如果提供了时间范围且需要扩展
@@ -96,7 +109,7 @@ class DataFetcher:
                 timeframe=timeframe,
                 pair=pair,
                 data_format='feather',  # 优先使用feather格式
-                candle_type='',
+                candle_type=candle_type,  # 自动检测或从config获取
                 timerange=None  # 完整加载，然后在内存中裁剪
             )
 
@@ -107,13 +120,17 @@ class DataFetcher:
                     timeframe=timeframe,
                     pair=pair,
                     data_format='json',
-                    candle_type='',
+                    candle_type=candle_type,  # 使用同样的检测逻辑
                     timerange=None
                 )
 
             if df.empty:
                 print(f"⚠ 未找到 {pair} 的数据")
                 return pd.DataFrame()
+
+            # 设置date列为索引（Freqtrade返回的是RangeIndex）
+            if 'date' in df.columns and not isinstance(df.index, pd.DatetimeIndex):
+                df = df.set_index('date')
 
             # 时间范围裁剪
             if start_date or end_date:
@@ -212,10 +229,20 @@ class DataFetcher:
         result = {}
 
         for pair in pairs:
-            # 检查feather文件
-            feather_file = self.data_dir / self.exchange / f"{pair.replace('/', '_')}-{timeframe}.feather"
-            # 检查json文件
-            json_file = self.data_dir / self.exchange / f"{pair.replace('/', '_')}-{timeframe}.json"
+            # 自动检测交易对类型
+            is_futures = ':USDT' in pair or ':BUSD' in pair or self.trading_mode == 'futures'
+
+            if is_futures:
+                # 期货数据: user_data/data/binance/futures/BTC_USDT_USDT-5m-futures.feather
+                base_dir = self.data_dir / self.exchange / 'futures'
+                pair_filename = pair.replace('/', '_').replace(':', '_')
+                feather_file = base_dir / f"{pair_filename}-{timeframe}-futures.feather"
+                json_file = base_dir / f"{pair_filename}-{timeframe}-futures.json"
+            else:
+                # 现货数据: user_data/data/binance/BTC_USDT-5m.feather
+                base_dir = self.data_dir / self.exchange
+                feather_file = base_dir / f"{pair.replace('/', '_')}-{timeframe}.feather"
+                json_file = base_dir / f"{pair.replace('/', '_')}-{timeframe}.json"
 
             result[pair] = feather_file.exists() or json_file.exists()
 
@@ -260,6 +287,11 @@ class DataFetcher:
         timeframe = timeframe or self.default_timeframe
         pairs_str = ' '.join(missing_pairs)
 
+        # 自动检测交易对类型（如果有任何期货交易对，就使用futures模式）
+        has_futures = any(':USDT' in p or ':BUSD' in p for p in missing_pairs)
+        trading_mode = 'futures' if has_futures or self.trading_mode == 'futures' else 'spot'
+        trading_mode_param = f"--trading-mode {trading_mode}" if trading_mode == 'futures' else ""
+
         command = f"""# 缺失 {len(missing_pairs)} 个币种的数据，执行以下命令下载：
 
 export https_proxy=http://127.0.0.1:7897
@@ -267,10 +299,11 @@ export http_proxy=http://127.0.0.1:7897
 
 freqtrade download-data \\
   --exchange {self.exchange} \\
+  {trading_mode_param} \\
   --pairs {pairs_str} \\
   --timeframes {timeframe} \\
   --days {days} \\
-  --dataformat-ohlcv feather
+  --data-format-ohlcv feather
 """
         return command
 

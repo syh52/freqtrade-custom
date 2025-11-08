@@ -1,0 +1,38 @@
+{
+  "_description": "Batch 2 - DeFi & Layer2 Pairs (23 pairs)",
+  "_note": "DeFi leaders (AAVE, UNI, CRV, LDO) and Layer2 tokens (ARB, OP, ZK)",
+  "_created": "2025-11-08",
+
+  "exchange": {
+    "pair_whitelist": [
+      "STRK/USDT:USDT",
+      "BCH/USDT:USDT",
+      "AAVE/USDT:USDT",
+      "ZK/USDT:USDT",
+      "RENDER/USDT:USDT",
+      "UNI/USDT:USDT",
+      "INJ/USDT:USDT",
+      "PENGU/USDT:USDT",
+      "ARB/USDT:USDT",
+      "WIF/USDT:USDT",
+      "CRV/USDT:USDT",
+      "HBAR/USDT:USDT",
+      "MERL/USDT:USDT",
+      "OP/USDT:USDT",
+      "XLM/USDT:USDT",
+      "TRX/USDT:USDT",
+      "AVNT/USDT:USDT",
+      "ATOM/USDT:USDT",
+      "SEI/USDT:USDT",
+      "EIGEN/USDT:USDT",
+      "GALA/USDT:USDT",
+      "LDO/USDT:USDT",
+      "TRB/USDT:USDT"
+    ]
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ]
+}

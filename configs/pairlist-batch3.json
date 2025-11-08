@@ -1,0 +1,39 @@
+{
+  "_description": "Batch 3 - New Coins & Small Cap Pairs (24 pairs)",
+  "_note": "Recently listed coins and smaller market cap tokens with higher volatility",
+  "_created": "2025-11-08",
+
+  "exchange": {
+    "pair_whitelist": [
+      "TON/USDT:USDT",
+      "S/USDT:USDT",
+      "STORJ/USDT:USDT",
+      "XTZ/USDT:USDT",
+      "ETHFI/USDT:USDT",
+      "WAL/USDT:USDT",
+      "ROSE/USDT:USDT",
+      "ZRO/USDT:USDT",
+      "GRT/USDT:USDT",
+      "CAKE/USDT:USDT",
+      "CFX/USDT:USDT",
+      "SPX/USDT:USDT",
+      "PHA/USDT:USDT",
+      "LINEA/USDT:USDT",
+      "PNUT/USDT:USDT",
+      "PYTH/USDT:USDT",
+      "MANTA/USDT:USDT",
+      "ARKM/USDT:USDT",
+      "SNX/USDT:USDT",
+      "ALGO/USDT:USDT",
+      "AIXBT/USDT:USDT",
+      "MEME/USDT:USDT",
+      "LPT/USDT:USDT",
+      "BIO/USDT:USDT"
+    ]
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ]
+}
